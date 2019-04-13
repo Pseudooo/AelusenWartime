@@ -47,6 +47,7 @@ public class AelusenWartime extends JavaPlugin {
 	public void onDisable() {
 		
 		this.wartimes.unscheduleAllTasks();
+		this.wartimes.unregisterAll();
 		
 		this.getLogger().info("AelusenWartime is now disabled!");
 	}
