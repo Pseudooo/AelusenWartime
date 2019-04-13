@@ -3,8 +3,8 @@ main: me.pseudo.Aelusen.AelusenWartime
 author: Pseudo
 version: 0.01
 commands:
-    nextwartime:
-        description: Next wartime!
+    listwartimes:
+        description: List wartimes!
         usage: /<command>
     wartimereload:
         description: Reloads Wartimes!

@@ -12,7 +12,7 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.pseudo.Aelusen.Commands.NextWartime;
+import me.pseudo.Aelusen.Commands.ListWartimes;
 import me.pseudo.Aelusen.Commands.Reload;
 import me.pseudo.Aelusen.EventListeners.PlayerJoin;
 import me.pseudo.Aelusen.EventListeners.PlayerLeave;
@@ -38,7 +38,7 @@ public class AelusenWartime extends JavaPlugin {
 		new PlayerLeave(this, this.wartimes);
 		
 		// Register Commands
-		this.getCommand("nextwartime").setExecutor(new NextWartime(this.wartimes));
+		this.getCommand("nextwartime").setExecutor(new ListWartimes(this.wartimes));
 		this.getCommand("wartimereload").setExecutor(new Reload(this, this.wartimes));
 		
 		this.getLogger().info("AelusenWartime is now enabled!");
@@ -81,7 +81,6 @@ public class AelusenWartime extends JavaPlugin {
 					BarColor.valueOf(this.getConfig().getString("wartimes."+ key + ".bar-color")), BarStyle.SOLID);
 			
 			// Create instance of Wartime with given dates
-			
 			Wartime wartime = new Wartime(startTime, endTime, bar);
 			this.wartimes.register(wartime); // Register with container class
 			
