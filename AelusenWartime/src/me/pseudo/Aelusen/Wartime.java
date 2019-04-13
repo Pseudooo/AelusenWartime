@@ -68,6 +68,7 @@ public class Wartime {
 	
 	// **************************************************** END OF GETTERS
 	
+	// Schedule all respect tasks for this instance
 	public void scheduleTasks(ScheduledExecutorService scheduler, TimeZone timeZone) {
 		
 		// Reset to midnight of current day

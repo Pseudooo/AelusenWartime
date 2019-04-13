@@ -21,15 +21,17 @@ public class Reload implements CommandExecutor {
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
+		// Permission check
 		if(sender instanceof Player) {
 			Player player = (Player) sender;
 			if(!player.hasPermission("aelusen.wartime.reload")) {
-				// Permission check
+				// Permission denied
 				player.sendMessage(ChatColor.RED+"You don't have permission do that!");
 				return true;
 			}
 		}
 		
+		// Reload plugin
 		sender.sendMessage(ChatColor.GREEN+"Reloading...");
 		
 		this.plugin.reloadConfig(); // Reload file

@@ -11,6 +11,11 @@ import me.pseudo.Aelusen.WartimeScheduler;
 
 public class ListWartimes implements CommandExecutor {
 	
+	/*
+	 * List wartimes command will display all of the wartimes
+	 * that are currently configured and loaded
+	 */
+	
 	private final WartimeScheduler wartimes;
 	
 	public ListWartimes(WartimeScheduler wartimes) {
@@ -27,7 +32,8 @@ public class ListWartimes implements CommandExecutor {
 				return true;
 			}
 			
-			for(Wartime wartime : wartimes.getWartimes()) { // MC Font is not monospaced so no inline formatting
+			// In-game font isn't monospaced so width formatting is pointless
+			for(Wartime wartime : wartimes.getWartimes()) {
 				player.sendMessage("WartimeID: "+wartime.getID().toString());
 				player.sendMessage(String.format("Millis: %d", wartime.getMillisUntil()));
 				player.sendMessage(String.format("Seconds: %d", wartime.getMillisUntil() / 1000));
@@ -36,7 +42,9 @@ public class ListWartimes implements CommandExecutor {
 			}
 			
 		}else {
-			for(Wartime wartime : wartimes.getWartimes()) { // Console is monospaced so rigid formatting is possible
+			
+			// Console font is monospaced so formatting is beneficial
+			for(Wartime wartime : wartimes.getWartimes()) {
 				sender.sendMessage("WartimeID: "+wartime.getID().toString());
 				sender.sendMessage(String.format("%8s %8d", "Millis:", wartime.getMillisUntil()));
 				sender.sendMessage(String.format("%8s %8d", "Seconds:", wartime.getMillisUntil() / 1000));

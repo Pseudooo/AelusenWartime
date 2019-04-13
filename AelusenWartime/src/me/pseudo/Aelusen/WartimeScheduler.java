@@ -11,7 +11,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class WartimeScheduler {
 	
 	private ArrayList<Wartime> wartimes; // All wartimes in server
-	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+	private final ScheduledExecutorService scheduler = 
+			Executors.newScheduledThreadPool(1);
 	private final JavaPlugin plugin;
 	
 	public WartimeScheduler(JavaPlugin plugin) {
@@ -38,7 +39,8 @@ public class WartimeScheduler {
 	public void unregisterAll() {
 		TimeZone timeZone = TimeZone.getTimeZone(this.plugin.getConfig().getString("timezone"));
 		
-		// Iterate through wartimes and check for a boss bar
+		// Iterate through wartimes and check for activity
+		// If is active then boss bar needs to be cleared
 		for(Wartime wartime : this.wartimes) {
 			if(wartime.isActive(timeZone)) {
 				wartime.getBossBar().removeAll();
@@ -49,6 +51,7 @@ public class WartimeScheduler {
 		this.wartimes.clear(); // Clear arr
 	}
 	
+	// Getter for collection of wartimes
 	public Collection<Wartime> getWartimes() {
 		return this.wartimes;
 	}
@@ -69,7 +72,6 @@ public class WartimeScheduler {
 	public void unscheduleAllTasks() {
 		
 		// Unschedule all running tasks for n wartimes
-		
 		for(Wartime wartime : this.wartimes) {
 			wartime.cancelScheduledTasks();
 		}
@@ -85,7 +87,7 @@ public class WartimeScheduler {
 		for(Wartime wartime : this.wartimes) {
 			if(wartime.isActive(timeZone)) {
 				activeWartime = wartime;
-				break; // Found, break
+				break; // Found -> break
 			}
 		}
 		

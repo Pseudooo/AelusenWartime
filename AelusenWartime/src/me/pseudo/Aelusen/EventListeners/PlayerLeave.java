@@ -29,7 +29,7 @@ public class PlayerLeave implements Listener{
 		
 		if(activeWartime == null) return;
 		
-		// Remove
+		// Remove player
 		activeWartime.getBossBar().removePlayer(e.getPlayer());
 		
 	}

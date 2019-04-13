@@ -55,25 +55,29 @@ public class AelusenWartime extends JavaPlugin {
 	
 	public void loadWartimes() {
 		
-		// Iterate through wartimes for potentially n wartimes
+		// Iterate through configuration for potentially n wartimes
 		// Wartimes are assumed to not overlap
 		for(String key : this.getConfig().getConfigurationSection("wartimes").getKeys(false)) {
 			
+			// Initialize starting and ending dates
 			Date startTime = null, endTime = null;
 			DateFormat formatter = new SimpleDateFormat("HH:mm");
-			// System.out.println(key); // DEBUG
 			
 			// Attempt parsing the dates
 			try {
-				startTime = formatter.parse(this.getConfig().getString("wartimes." + key + ".wartime-start"));
-				endTime = formatter.parse(this.getConfig().getString("wartimes." + key + ".wartime-end"));
+				
+				startTime = formatter.parse(
+						this.getConfig().getString("wartimes." + key + ".wartime-start"));
+				
+				endTime = formatter.parse(
+						this.getConfig().getString("wartimes." + key + ".wartime-end"));
+				
 			}catch(ParseException e) {
 				// Parse failed
 				this.getLogger().severe("There was a problem parsing the dates for " + key
 						+ " in the configuration!");
-				this.getLogger().severe("Plugin will now be disabled!"); // Disable plugin and notify
-				this.getServer().getPluginManager().disablePlugin(this);
-				return;
+				this.getLogger().severe("Wartime will be skipped!"); // Disable plugin and print to console
+				continue;
 			}
 			
 			// Create boss bar based on defined config
