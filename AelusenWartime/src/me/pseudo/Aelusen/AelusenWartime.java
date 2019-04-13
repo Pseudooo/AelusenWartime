@@ -46,6 +46,7 @@ public class AelusenWartime extends JavaPlugin {
 	
 	public void onDisable() {
 		
+		// Unschedule all tasks for shutdown or reloading
 		this.wartimes.unscheduleAllTasks();
 		this.wartimes.unregisterAll();
 		
