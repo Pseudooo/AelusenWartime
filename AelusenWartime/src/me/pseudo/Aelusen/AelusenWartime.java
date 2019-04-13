@@ -38,7 +38,7 @@ public class AelusenWartime extends JavaPlugin {
 		new PlayerLeave(this, this.wartimes);
 		
 		// Register Commands
-		this.getCommand("nextwartime").setExecutor(new ListWartimes(this.wartimes));
+		this.getCommand("listwartimes").setExecutor(new ListWartimes(this.wartimes));
 		this.getCommand("wartimereload").setExecutor(new Reload(this, this.wartimes));
 		
 		this.getLogger().info("AelusenWartime is now enabled!");

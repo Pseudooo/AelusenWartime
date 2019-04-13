@@ -21,7 +21,7 @@ public class ListWartimes implements CommandExecutor {
 		
 		if(sender instanceof Player) {
 			Player player = (Player) sender;
-			if(!player.hasPermission("aelusen.wartime.nextwartime")) {
+			if(!player.hasPermission("aelusen.wartime.listwartimes")) {
 				// No permission
 				player.sendMessage(ChatColor.RED+"You don't have permission to do that!");
 				return true;
