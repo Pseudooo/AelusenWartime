@@ -1,0 +1,11 @@
+name: AelusenWartime
+main: me.pseudo.Aelusen.AelusenWartime
+author: Pseudo
+version: 0.01
+commands:
+    nextwartime:
+        description: Next wartime!
+        usage: /<command>
+    wartimereload:
+        description: Reloads Wartimes!
+        usage: /<command>

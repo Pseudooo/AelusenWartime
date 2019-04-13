@@ -1,0 +1,12 @@
+timezone: 'EST'
+wartimes:
+    wartime-1:
+        wartime-start: '18:00'
+        wartime-end: '19:00'
+        wartime-active-text: "&c&lIt's now Wartime!"
+        bar-color: "RED"
+    wartime-2:
+        wartime-start: '12:00'
+        wartime-end: '14:00'
+        wartime-active-text: "&c&lIt's bum time!"
+        bar-color: "YELLOW"
