@@ -7,7 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.pseudo.Aelusen.AelusenWartime;
-import me.pseudo.Aelusen.WartimeScheduler;
 
 public class Reload implements CommandExecutor {
 	

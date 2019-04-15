@@ -22,6 +22,8 @@ public class Wartime {
 	
 	private ScheduledFuture<?> startHandler = null, endHandler = null;
 	
+	private DisplayBossBarTask displayTask = null;
+	
 	private final BossBar bar;
 	
 	public Wartime(Date startTime, Date endTime, BossBar bar) {
@@ -90,7 +92,7 @@ public class Wartime {
 		long initDelay = scheduledStartTime.getTime() - new Date().getTime();
 		
 		// Instantiate tasks for scheduling
-		DisplayBossBarTask displayTask = new DisplayBossBarTask(this.bar);
+		this.displayTask = new DisplayBossBarTask(this, scheduler);
 		ClearBossBarTask clearTask = new ClearBossBarTask(this.bar);
 		
 		// Schedule starting and ending tasks
@@ -104,6 +106,7 @@ public class Wartime {
 	public void cancelScheduledTasks() {
 		
 		// Cancel running tasks
+		if(this.displayTask != null) this.displayTask.cancel();
 		if(startHandler != null) startHandler.cancel(true);
 		if(endHandler != null) endHandler.cancel(true);
 		
