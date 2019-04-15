@@ -39,6 +39,7 @@ public class ListWartimes implements CommandExecutor {
 				player.sendMessage(String.format("Seconds: %d", wartime.getMillisUntil() / 1000));
 				player.sendMessage(String.format("Minutes: %d", wartime.getMillisUntil() / (60 * 1000)));
 				player.sendMessage(String.format("Hours: %d", wartime.getMillisUntil() / (60 * 60 * 1000)));
+				player.sendMessage(" - - - - - - ");
 			}
 			
 		}else {

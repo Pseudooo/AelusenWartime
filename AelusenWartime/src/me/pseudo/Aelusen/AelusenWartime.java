@@ -39,7 +39,7 @@ public class AelusenWartime extends JavaPlugin {
 		
 		// Register Commands
 		this.getCommand("listwartimes").setExecutor(new ListWartimes(this.wartimes));
-		this.getCommand("wartimereload").setExecutor(new Reload(this, this.wartimes));
+		this.getCommand("wartimereload").setExecutor(new Reload(this));
 		
 		this.getLogger().info("AelusenWartime is now enabled!");
 	}
@@ -92,6 +92,10 @@ public class AelusenWartime extends JavaPlugin {
 			
 		}
 		
+	}
+	
+	public WartimeScheduler getWartimeScheduler() {
+		return this.wartimes;
 	}
 	
 }
