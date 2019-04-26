@@ -3,30 +3,39 @@ package me.pseudo.Aelusen;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.bukkit.Bukkit;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import me.pseudo.Aelusen.Tasks.ClearBossBarTask;
 import me.pseudo.Aelusen.Tasks.DisplayBossBarTask;
+import me.pseudo.Aelusen.Tasks.DisplayWarningBarTask;
+import net.md_5.bungee.api.ChatColor;
 
 public class Wartime {
 	
 	private Date startTime;
 	private long duration;
 	private final UUID id; // UUID for comparison/dynamic modifications in future versions
+	private List<Integer> warnings;
 	
 	private ScheduledFuture<?> startHandler = null, endHandler = null;
+	private List<ScheduledFuture<?>> warningHandlers = null;
 	
 	private DisplayBossBarTask displayTask = null;
 	
 	private final BossBar bar;
 	
-	public Wartime(Date startTime, Date endTime, BossBar bar) {
+	public Wartime(Date startTime, Date endTime, BossBar bar, List<Integer> warnings) {
 		
 		// Assign variables
 		this.startTime = startTime;
@@ -39,6 +48,8 @@ public class Wartime {
 		this.id = UUID.randomUUID();
 		
 		this.bar = bar;
+		
+		this.warnings = warnings;
 		
 	}
 	
@@ -71,7 +82,8 @@ public class Wartime {
 	// **************************************************** END OF GETTERS
 	
 	// Schedule all respect tasks for this instance
-	public void scheduleTasks(ScheduledExecutorService scheduler, TimeZone timeZone) {
+	public void scheduleTasks(JavaPlugin plugin, 
+			ScheduledExecutorService scheduler, TimeZone timeZone) {
 		
 		// Reset to midnight of current day
 		Calendar cal = new GregorianCalendar();
@@ -95,6 +107,29 @@ public class Wartime {
 		this.displayTask = new DisplayBossBarTask(this, scheduler);
 		ClearBossBarTask clearTask = new ClearBossBarTask(this.bar);
 		
+		if(this.warnings != null) { // null warnings means none defined
+			for(Integer warning : this.warnings) {
+				
+				// Message that will be displayed on boss bar
+				String msg = ChatColor.translateAlternateColorCodes('&', 
+						plugin.getConfig().getString("warning-text")
+						.replaceAll("%mins%", warning.toString()));
+				
+				BossBar warningBar = Bukkit.createBossBar(msg,
+						BarColor.valueOf(plugin.getConfig().getString("warning-bar-color")), 
+						BarStyle.SOLID);
+				
+				DisplayWarningBarTask warningBarTask = new DisplayWarningBarTask(plugin, warningBar);
+				
+				long warningCountdown = initDelay - warning*60*1000L;
+				if(warningCountdown < 0) warningCountdown += 24L*60*60*1000;
+				
+				this.warningHandlers.add(scheduler.scheduleAtFixedRate(warningBarTask, 
+						warningCountdown, 24*60*60*1000L, TimeUnit.MILLISECONDS));
+				
+			}
+		}
+		
 		// Schedule starting and ending tasks
 		startHandler = scheduler.scheduleAtFixedRate(displayTask, initDelay, 24*60*60*1000L,
 				TimeUnit.MILLISECONDS);
@@ -110,6 +145,9 @@ public class Wartime {
 		if(startHandler != null) startHandler.cancel(true);
 		if(endHandler != null) endHandler.cancel(true);
 		
+		for(ScheduledFuture<?> handler : this.warningHandlers) {
+			handler.cancel(true);
+		}
 	}
 	
 	public boolean isActive(TimeZone timeZone) {

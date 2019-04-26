@@ -5,6 +5,12 @@ wartimes:
         wartime-end: '19:00'
         wartime-active-text: "&c&lIt's now Wartime!"
         bar-color: "RED"
+        warning-text: "&cWartime starts in %mins% minutes!"
+        warning-bar-color: "RED"
+        warnings:
+        - 5
+        - 10
+        - 15
     wartime-2:
         wartime-start: '12:00'
         wartime-end: '14:00'

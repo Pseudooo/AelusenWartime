@@ -31,6 +31,7 @@ public class DisplayBossBarTask implements Runnable{
 		for(ScheduledFuture<?> taskhandler : this.updateTasks) {
 			taskhandler.cancel(true);
 		}
+		
 	}
 	
 	@Override

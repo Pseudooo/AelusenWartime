@@ -3,7 +3,9 @@ package me.pseudo.Aelusen;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -41,6 +43,7 @@ public class AelusenWartime extends JavaPlugin {
 		this.getCommand("listwartimes").setExecutor(new ListWartimes(this.wartimes));
 		this.getCommand("wartimereload").setExecutor(new Reload(this));
 		
+		// Enabled ya yeet
 		this.getLogger().info("AelusenWartime is now enabled!");
 	}
 	
@@ -50,6 +53,7 @@ public class AelusenWartime extends JavaPlugin {
 		this.wartimes.unscheduleAllTasks();
 		this.wartimes.unregisterAll();
 		
+		// Disabled ya yeet
 		this.getLogger().info("AelusenWartime is now disabled!");
 	}
 	
@@ -86,8 +90,14 @@ public class AelusenWartime extends JavaPlugin {
 							this.getConfig().getString("wartimes." + key + ".wartime-active-text")), 
 					BarColor.valueOf(this.getConfig().getString("wartimes."+ key + ".bar-color")), BarStyle.SOLID);
 			
+			List<Integer> warnings = new ArrayList<Integer>();
+			
+			if(this.getConfig().contains("wartimes." + key + ".warnings")) {
+				warnings = this.getConfig().getIntegerList("wartimes."+key+".warnings");
+			}else warnings = null;
+			
 			// Create instance of Wartime with given dates
-			Wartime wartime = new Wartime(startTime, endTime, bar);
+			Wartime wartime = new Wartime(startTime, endTime, bar, warnings);
 			this.wartimes.register(wartime); // Register with container class
 			
 		}

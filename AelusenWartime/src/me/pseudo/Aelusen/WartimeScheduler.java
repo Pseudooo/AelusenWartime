@@ -64,7 +64,7 @@ public class WartimeScheduler {
 		
 		// Iter and schedule
 		for(Wartime wartime : this.wartimes) {
-			wartime.scheduleTasks(this.scheduler, timeZone);
+			wartime.scheduleTasks(this.plugin, this.scheduler, timeZone);
 		}
 		
 	}

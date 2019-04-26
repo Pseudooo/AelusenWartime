@@ -32,7 +32,7 @@ public class ListWartimes implements CommandExecutor {
 				return true;
 			}
 			
-			// In-game font isn't monospaced so width formatting is pointless
+			// In-game font isn't monospaced so width formatting is USELESS
 			for(Wartime wartime : wartimes.getWartimes()) {
 				player.sendMessage("WartimeID: "+wartime.getID().toString());
 				player.sendMessage(String.format("Millis: %d", wartime.getMillisUntil()));
