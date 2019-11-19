@@ -2,7 +2,7 @@ package me.pseudo.Aelusen.Tasks;
 
 import org.bukkit.boss.BossBar;
 
-public class ClearBossBarTask implements Runnable{
+public class ClearBossBarTask implements Runnable {
 	
 	private final BossBar bar;
 	

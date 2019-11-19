@@ -92,12 +92,18 @@ public class AelusenWartime extends JavaPlugin {
 			
 			List<Integer> warnings = new ArrayList<Integer>();
 			
+			String msg = null;
+			BarColor warningColor = null;
+			
 			if(this.getConfig().contains("wartimes." + key + ".warnings")) {
 				warnings = this.getConfig().getIntegerList("wartimes."+key+".warnings");
+				msg = this.getConfig().getString("wartimes." + key + ".warning-text");
+				warningColor = BarColor.valueOf(
+						this.getConfig().getString("wartimes. " + key + ".warning-bar-color"));
 			}else warnings = null;
 			
 			// Create instance of Wartime with given dates
-			Wartime wartime = new Wartime(startTime, endTime, bar, warnings);
+			Wartime wartime = new Wartime(startTime, endTime, bar, warnings, msg, warningColor);
 			this.wartimes.register(wartime); // Register with container class
 			
 		}

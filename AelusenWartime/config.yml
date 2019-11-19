@@ -11,8 +11,3 @@ wartimes:
         - 5
         - 10
         - 15
-    wartime-2:
-        wartime-start: '12:00'
-        wartime-end: '14:00'
-        wartime-active-text: "&c&lIt's bum time!"
-        bar-color: "YELLOW"

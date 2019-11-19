@@ -31,11 +31,15 @@ public class Wartime {
 	private ScheduledFuture<?> startHandler = null, endHandler = null;
 	private List<ScheduledFuture<?>> warningHandlers = null;
 	
+	private final String warningMessage;
+	
 	private DisplayBossBarTask displayTask = null;
 	
 	private final BossBar bar;
+	private final BarColor warningColor;
 	
-	public Wartime(Date startTime, Date endTime, BossBar bar, List<Integer> warnings) {
+	public Wartime(Date startTime, Date endTime, BossBar bar, 
+			List<Integer> warnings, String warningMessage, BarColor warningColor) {
 		
 		// Assign variables
 		this.startTime = startTime;
@@ -50,6 +54,10 @@ public class Wartime {
 		this.bar = bar;
 		
 		this.warnings = warnings;
+		
+		this.warningMessage = warningMessage;
+		
+		this.warningColor = warningColor;
 		
 	}
 	
@@ -110,14 +118,10 @@ public class Wartime {
 		if(this.warnings != null) { // null warnings means none defined
 			for(Integer warning : this.warnings) {
 				
-				// Message that will be displayed on boss bar
 				String msg = ChatColor.translateAlternateColorCodes('&', 
-						plugin.getConfig().getString("warning-text")
-						.replaceAll("%mins%", warning.toString()));
+						this.warningMessage.replaceAll("%mins%", warning.toString()));
 				
-				BossBar warningBar = Bukkit.createBossBar(msg,
-						BarColor.valueOf(plugin.getConfig().getString("warning-bar-color")), 
-						BarStyle.SOLID);
+				BossBar warningBar = Bukkit.createBossBar(msg, this.warningColor, BarStyle.SOLID);
 				
 				DisplayWarningBarTask warningBarTask = new DisplayWarningBarTask(plugin, warningBar);
 				
